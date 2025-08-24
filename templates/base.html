@@ -5,8 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %}</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
         <noscript>
-          <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+          <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
         </noscript>
     
         <script src="{{ url_for('static', filename='script.js') }}" defer></script>
@@ -21,7 +22,7 @@
           <div class="sidebar-header">
 
             <a href="#" class="sidebar-logo">
-              <img src="{{ url_for('static', filename='assets/logo.png')}}" alt="al bawani logo">
+              <img id="mini-logo" src="{{ url_for('static', filename='assets/logo.png')}}" alt="al bawani logo">
                 <span class="logo-text">Al Bawani</span>
             </a>
 
@@ -75,4 +76,3 @@
       </div>
       
 </html>
-
