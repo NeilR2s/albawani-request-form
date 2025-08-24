@@ -24,10 +24,13 @@ def set_db_tables():
     Base.metadata.create_all(bind=engine)
 
 class FormData(Base):
-    __tablename__ = "form_data"
+    __tablename__ = "report_request"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    submitted = Column(DateTime, server_default=func.now())
+    submitted_date = Column(DateTime, server_default=func.now())
+    processed_date = Column(DateTime)
+    processed_status = Column(String, default="pending", nullable=False)
     start_date = Column(Date, nullable=False)
     end_date = Column(Date, nullable=False)
     message = Column(String)
+

@@ -1,0 +1,31 @@
+:root{
+    /* Albawani Core Brand from https://www.albawani.net/ */
+    --albawani-green-main: #0A6836;
+    --albawani-green-secondary:#0F8A48;
+    --saudi-gold-accent:#D4A017;
+
+    --bg-main: #F9F9F9;
+    --bg-secondary: #FFFFFF;
+    --text-primary: #212121;
+    --text-secondary: #569569;
+    --border-color: #E0E0E0;
+
+    --footer-bg: #333644;
+    --footer-text: #BFBFBF;
+
+    /* Alert and Pop-ups*/
+    --success-feedback: #28A745;
+    --warning-feedback: #FFC107;
+    --error-feedback: #DC3545;
+}
+
+body {
+    font-family: "Google Sans", sans-serif;
+    font-weight: 400;
+}
+
+.sidebar{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

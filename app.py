@@ -18,8 +18,16 @@ class FormData(BaseModel):
 
 
 @app.route("/", methods=["GET"])
-def home():
-    return {"message": "Welcome to the Flask Form Application!"}
+def render_home_page():
+    return render_template("index.html")
+
+@app.route("/attendance", methods=["GET"])
+def render_attendees_page():
+    return render_template("attendance.html")
+
+@app.route("/employees", methods=["GET"])
+def render_employees_page():
+    return render_template("employees.html")
 
 @app.route("/create-form", methods=["POST"])
 def create_form():
