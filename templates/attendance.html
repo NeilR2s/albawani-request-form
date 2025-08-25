@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 
 {% block title %}Attendance{% endblock %}
+{% block header %}Attendance{% endblock %}
+{% block date %}8/25/2025{% endblock %}
 
 {% block content %}
-        <h1>Submit Attendance Requesttttttttttttttttttttttttttttttzt</h1>
+        <div class="date-controls-container">
+
+        <div class="control-group">
+                <label for="start-date">From:</label>
+                <input type="date" id="start-date" name="start-date" value="{{ start_date }}">
+        </div>
+        <div class="control-group">
+                <label for="end-date">To:</label>
+                <input type="date" id="end-date" name="end-date" value="{{ end_date }}">
+        </div>
+        <button class="attendance-btn">Generate Report</button>
+        </div>
+
+
+
 {% endblock %}
