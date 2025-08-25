@@ -13,10 +13,7 @@
         <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     </head>
 
-
     <body>
-
-      <div class="app-container">
 
         <aside class="sidebar">
 
@@ -46,7 +43,7 @@
                   <span class="active-indicator"></span>
                   <span class="link-text">Employees</span>
                 </a>
-              </li>
+              </li> 
 
             </ul>
 
@@ -54,11 +51,16 @@
         </aside>
 
         <main>
+          <header class = "header-container">
+            <h1 class = "header-text">{% block header %}{% endblock %}</h1>
+            <span class="header-seperator">|</span>
+            <span class = "date-updated">Last Updated: {% block date %}{% endblock %}</span>
+          </header>
+
             {% block content %}{% endblock %}
         </main> 
-        
-    </div>  
-  </body>
+
+    </body>
      
       
 </html>
