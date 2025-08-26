@@ -1,0 +1,9 @@
+curl_cffi
+dotenv
+flask 
+Flask-Caching
+gunicorn 
+pandas
+pydantic
+python-dotenv
+SQLAlchemy 
