@@ -16,9 +16,12 @@
     --footer-text: #BFBFBF;
 
     /* Alert and Pop-ups*/
-    --success-feedback: #28A745;
-    --warning-feedback: #FFC107;
-    --error-feedback: #DC3545;
+    --success-bg: #EAF7EC;
+    --warning-bg: #FFF8E6;
+    --error-bg: #FBEAEB;
+    --success-border: #28A745;
+    --warning-border: #FFC107;
+    --error-border: #DC3545;
 
     /* Sidebar */
     --sidebar-width-open: 16rem;
@@ -27,11 +30,12 @@
     --toggle-border-radius: 24rem;
     --button-hover-bg: rgba(0,0,0,0.15);
     
-    --transition-duration: 250ms;
+    --transition-duration: 300ms;
     --card-shadow: 0 8px 32px 2px rgba(0, 0, 0, 0.1);
     --glow-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
 
     --border-radius-lg: 0.5rem;
+    --border-radius-xl: 1rem;
     --border-sm: 0.07rem;
 }
 
@@ -149,9 +153,54 @@ main {
     background-image: var(--gradient-color);
 }
 
+/* pseudo elements and inherited states managemnent for less messy javascript code */
+
+.date-controls-notification-container {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity var(--transition-duration) ease-in-out, transform var(--transition-duration) ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border: var(--border-sm) solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--border-radius-lg);
+    margin: 0.5rem 2rem;
+    padding: 0.4rem 0rem;
+    border-radius: var(--border-radius-xl);
+}
+
+.date-controls-notification-container.visible{
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.date-controls-notification-container.success {
+    border-color: var(--success-border);
+    background-color: var(--success-bg);
+    color: var(--text-primary);
+}
+
+.date-controls-notification-container.warning {
+    border-color: var(--warning-border);
+    background-color: var(--warning-bg);
+    color: var(--text-primary);
+}
+
+.date-controls-notification-container.error {
+    border-color: var(--error-border);
+    background-color: var(--error-bg);
+    color: var(--text-primary);
+}
+
+
 .date-controls-container{
     display: flex;
     align-items: center;
+    justify-content: start;
     gap: 4rem;
     padding: 1rem 2rem;
     margin: 1rem 2rem;
@@ -202,7 +251,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .attendance-btn{
-    margin-left: auto;
+    /* margin-left: auto; */
     background: var(--albawani-green-main);
     border: none;
     color: var(--bg-main);
@@ -223,7 +272,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .employees-container{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 4rem;
     padding: 1rem 2rem;
     margin: 1rem 2rem;
