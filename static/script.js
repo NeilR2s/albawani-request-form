@@ -14,6 +14,7 @@ function getDateRange(){
     let dateSuccessMessage = `Successfully sent attendance request`;
     let dateWarningMessage = `Warning: your given end date ${endDate} is the same as your start date ${startDate}`;
     let dateErrorMessage = `Error: your given end date ${endDate} must be greater than your start date ${startDate}`;
+    let dateEmptyMessage = `Error: your given end date or start date is empty.`;
     console.log(`START: ${startDate} || END: ${endDate}`)
 
     notifMessagePopup.classList.remove('success', 'warning', 'error');
@@ -25,6 +26,11 @@ function getDateRange(){
         // console.warn(`your given end date ${endDate} is the same as your start date ${startDate}`);
     }
 
+    else if (endDate == "" || startDate =="") {
+        notifMessagePopup.classList.add("error")
+        notifMessagePopup.classList.add("visible")
+        notifMessage.innerHTML = dateEmptyMessage
+    }
     else if (endDate < startDate){
         notifMessagePopup.classList.add("error")
         notifMessagePopup.classList.add("visible")
