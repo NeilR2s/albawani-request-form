@@ -28,7 +28,7 @@ class FormData(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     submitted_date = Column(DateTime, server_default=func.now())
-    processed_date = Column(DateTime)
+    processed_date = Column(DateTime, nullable=True)
     processed_status = Column(String, default="pending", nullable=False)
     start_date = Column(Date, nullable=False)
     end_date = Column(Date, nullable=False)
