@@ -46,7 +46,7 @@ function getDateRange(){
 };
 
 function clearDateNotification(){
-    notifMessagePopup.classList,remove("visible")
+    notifMessagePopup.classList.remove("visible")
     notifMessage.innerHTML = ""
 }
 
