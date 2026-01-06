@@ -1,6 +1,6 @@
 const DEV_MODE = true; 
 
-const BACKEND_URL = `http://127.0.0.1:5000`;
+const BACKEND_URL = `http://localhost:8000`;
 const ATTENDANCE_API = BACKEND_URL + `/request-attendance`;
 
 const requestAttendanceBtn = document.getElementById("request-attendance-btn");
@@ -24,7 +24,7 @@ async function sendAttendanceRequest(attendanceEndpoint, attendanceDateRange) {
         
         const responseData = response.json()
         if (!responseData.ok){
-            throw new Error(`idk something something: ${responseData}`)
+            throw new Error(` : ${responseData}`)
         }
         console.log(`/attendance response data: ${responseData}`)
     }
