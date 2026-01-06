@@ -1,10 +1,7 @@
-curl_cffi
-dotenv
 flask 
 flask-cors
-Flask-Caching
 gunicorn 
-pandas
+# pandas
 pydantic
 python-dotenv
 SQLAlchemy 
