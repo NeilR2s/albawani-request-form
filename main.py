@@ -1,18 +1,13 @@
-'''
-i need a simple form in flask. starting date and ending  and a submit button.
-validation: ending date must be equal or greater than starting date. 
-date format in dd-mm-yyyy. submit button will save the request to sqlite3 database.
-'''
-from datetime import date, datetime
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
-from pydantic import BaseModel, Field
-from db import get_db_session, set_db_tables, FormData as DBFormData
+from datetime import datetime
 import logging
 
-# TODO: implement app constuctor once requirements become clear
-app = Flask(__name__)
-CORS(app)
+from flask import Flask, render_template, request, jsonify, url_for, redirect, session
+from flask_session import Session
+from flask_cors import CORS
+
+from auth import build_msal_app, login_required
+from config import settings
+from db import get_db_session, set_db_tables, FormData as DBFormData
 
 # TODO: implement fancy logger constructor
 logging.basicConfig(
@@ -24,26 +19,59 @@ logging.basicConfig(
 )
 logger = logging.getLogger()
 
-class FormData(BaseModel):
+logger.info("setting up middleware")
 
-    start_date:date = Field(default=None)
-    end_date:date = Field(default=None)
-    message:str = Field(default=None)
+app = Flask(__name__)
+app.secret_key = settings.SECRET_KEY
+app.config["SESSION_TYPE"] = settings.SESSION_TYPE
+CORS(app)
+Session(app)
 
 
 @app.route("/", methods=["GET"])
 def render_home_page():
     return render_template("index.html")
 
+@app.route("/login")
+def login():
+    msal_app = build_msal_app()
+
+    auth_url = msal_app.get_authorization_request_url(
+        scopes=settings.SCOPE,
+        redirect_uri=url_for("auth_callback", _external=True)
+    )
+    return redirect(auth_url)
+
+@app.route("/auth/callback")
+def auth_callback():
+    code = request.args.get("code")
+
+    msal_app = build_msal_app()
+    result = msal_app.acquire_token_by_authorization_code(
+        code=code,
+        scopes=settings.SCOPE,
+        redirect_uri=url_for("auth_callback", _external=True),
+    )
+
+    if "id_token_claims" in result:
+        session["user"] = result["id_token_claims"]
+        return redirect(url_for("render_home_page"))
+
+    return "Authentication failed", 401
+    
+
 @app.route("/attendance", methods=["GET"])
+@login_required
 def render_attendees_page():
     return render_template("attendance.html")
 
 @app.route("/employees", methods=["GET"])
+@login_required
 def render_employees_page():
     return render_template("employees.html")
 
 @app.route("/request-attendance", methods=["POST"])
+@login_required
 def create_form():
     if not request.is_json:
         return jsonify({"error": "Request must be JSON"}), 400

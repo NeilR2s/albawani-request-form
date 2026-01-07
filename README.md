@@ -26,3 +26,24 @@ The app is configured to run on port 8000. If you do not like it, you may have t
 gunicorn --workers 2 --worker-connections 1000 --max-requests 1000 --bind 0.0.0.0:8000 --timeout 1000 main:app 
 
 ```
+
+## EntraID Setup
+
+You will need to add your own EntraID instance, and specific to Albawani Email holders. For demo purposes, I hardcoded the url redirect (once the token is accepted) to `localhost:8000`. To start, you will need the following.
+
+1. Go to Azure Portal (or EntraID Admin Center)
+2. From the Portal or Admin center, go to **App Registrations** and create a **New Registration**.
+3. You will need the following details: (if they are not defined, go create them) 
+    * Application (client) ID
+    * Client credentials (create a secret)
+    * Directory (tenant) ID
+4. Add Redirect URIs (web) that corresponds to either localhost (local testing) or your custom domain.
+5. Create a `.env` file (refer to `.env.sample`)
+6. Add `SECRET_KEY` for Flask session hash
+
+
+## Other Information
+
+* The app logs are not printed to standard out, they are in `app.log`. Will work on a more robust logger once deployment is a concern. 
+* Network level security (CORS, Sessions, REST Endpoints, etc.) and Application level security features need to be reviewed.
+* I can add REST endpoints so you dont have to read the database file everytime. But if no need, just read `formdata.db`. This file contains the attendance requests.

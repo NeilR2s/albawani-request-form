@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, Session
 from sqlalchemy.sql.functions import func
-from config import DATABASE
+from config import settings
 from contextlib import contextmanager
 
-engine = create_engine(DATABASE.get("url")) 
+engine = create_engine(settings.DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

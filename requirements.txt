@@ -1,7 +1,10 @@
+azure-identity
+msgraph-sdk
 flask 
 flask-cors
+flask-session
 gunicorn 
-# pandas
 pydantic
+pydantic_settings
 python-dotenv
 SQLAlchemy 
