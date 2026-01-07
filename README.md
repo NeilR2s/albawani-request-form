@@ -22,6 +22,16 @@ pip install -r requirements.txt
 ## Startup Command
 
 The app is configured to run on port 8000. If you do not like it, you may have to tweak `const BACKEND_URL` in `script.js`.
+
+### Recommended Development Startup Command
+Do not use this in prod.
+```
+python3 main.py
+
+```
+
+### Recommended Production Startup Command
+Modify workers depending on VM cpu threads
 ```
 gunicorn --workers 2 --worker-connections 1000 --max-requests 1000 --bind 0.0.0.0:8000 --timeout 1000 main:app 
 
