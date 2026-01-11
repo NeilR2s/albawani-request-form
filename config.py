@@ -15,9 +15,14 @@ class Settings(BaseSettings):
     AZURE_CLIENT_ID: str = "AZURE_CLIENT_ID"
     AZURE_CLIENT_SECRET: str = "AZURE_CLIENT_SECRET"
     AZURE_TENANT_ID: str = "AZURE_TENANT_ID"
+    AUTHORITY:str = "AUTHORITY"
     SCOPE: list[str] = ["User.Read"]
 
 
 # Singleton, DO NOT MUTATE
 settings = Settings()
+
+# if __name__ == "__main__":
+    # print(settings.AUTHORITY)
+
 

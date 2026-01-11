@@ -5,11 +5,12 @@ import msal
 
 from config import settings
 
+
 def build_msal_app():
     return msal.ConfidentialClientApplication(
         client_id=settings.AZURE_CLIENT_ID,
         client_credential=settings.AZURE_CLIENT_SECRET,
-        authority=f"https://login.microsoftonline.com/{settings.AZURE_TENANT_ID}"
+        authority=settings.AUTHORITY
     )
 
 def login_required(f):
@@ -19,3 +20,14 @@ def login_required(f):
             return redirect(url_for("login"))
         return f(*args, **kwargs)
     return decorated
+
+def get_user_client():
+    user = session["user"]
+
+    safe_user = {
+        "name": user.get("name", "Unknown User"),
+        "email": user.get("preferred_username", "unknown@email.com")
+    }
+
+    return safe_user
+

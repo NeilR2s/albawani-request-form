@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, jsonify, url_for, redirect, s
 from flask_session import Session
 from flask_cors import CORS
 
-from auth import build_msal_app, login_required
+from auth import build_msal_app, login_required, get_user_client
 from config import settings
 from db import get_db_session, set_db_tables, FormData as DBFormData
 
@@ -79,21 +79,40 @@ def create_form():
     try:
         data=request.get_json()
         logger.info(f"request-attendance endpoint response:\n{data} ")
+
+        request_start_date = datetime.fromisoformat(data.get("startDate")).date()
+        request_end_date = datetime.fromisoformat(data.get("endDate")).date()
+        user = session["user"]
+        
+        if request_start_date > request_end_date:
+            return jsonify({"error": "Invalid date range. The start date must not be greater than current date."})
+
         with get_db_session() as db_session:
             database_object = DBFormData(
-                start_date=datetime.fromisoformat(data.get("startDate")).date(),
-                end_date=datetime.fromisoformat(data.get("endDate")).date(),
+                start_date=request_start_date,
+                end_date=request_end_date,
+                user_name=user.get("name", "Unknown User"),
+                user_email=user.get("preferred_username", "unknown@email.com"),
                 message="raw client data"
             )
+
             db_session.add(database_object)
 
+            logger.info(f"User {session['user']} submitted request")
             logger.info(f"Committed object to FormData table \n {database_object}")
         return jsonify({"message": "Hello from Flask server!"}), 200
 
     except Exception as e:
         logger.error(e)
         return jsonify({"error": f"Invalid JSON format: {str(e)}"}), 400
-
+    
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(
+        f"{settings.AUTHORITY}/oauth2/v2.0/logout"
+        f"?post_logout_redirect_uri={url_for('render_home_page', _external=True)}"
+    )
 
 if __name__ == "__main__":
     set_db_tables()

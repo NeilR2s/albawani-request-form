@@ -31,7 +31,7 @@ python3 main.py
 ```
 
 ### Recommended Production Startup Command
-Modify workers depending on VM cpu threads
+Modify workers depending on VM cpu threads (2 is good enough)
 ```
 gunicorn --workers 2 --worker-connections 1000 --max-requests 1000 --bind 0.0.0.0:8000 --timeout 1000 main:app 
 
