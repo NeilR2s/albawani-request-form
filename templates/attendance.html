@@ -1,25 +1,36 @@
 {% extends "base.html" %}
 
 {% block title %}Attendance{% endblock %}
-{% block header %}Attendance{% endblock %}
-{% block date %}8/28/2025{% endblock %}
+{% block header %}Attendance Report{% endblock %}
 
 {% block content %}
-        <div class="date-controls-container">
+<div class="w-full max-w-2xl mx-auto space-y-6">
+    
+    <div class="rounded-xl border border-zinc-200 bg-white shadow-sm p-6">
+        <div class="grid gap-6 md:grid-cols-2">
+            <div class="space-y-2">
+                <label for="start-date" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">From Date</label>
+                <input type="date" id="start-date" name="start-date" value="{{ start_date }}" 
+                class="flex h-10 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-albawani-main/20 focus:border-albawani-main disabled:cursor-not-allowed disabled:opacity-50 transition-all">
+            </div>
+            
+            <div class="space-y-2">
+                <label for="end-date" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">To Date</label>
+                <input type="date" id="end-date" name="end-date" value="{{ end_date }}" 
+                class="flex h-10 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-albawani-main/20 focus:border-albawani-main disabled:cursor-not-allowed disabled:opacity-50 transition-all">
+            </div>
+        </div>
 
-        <div class="control-group">
-                <label for="start-date">From:</label>
-                <input type="date" id="start-date" name="start-date" value="{{ start_date }}">
+        <div class="mt-6 flex justify-end">
+            <button id="request-attendance-btn" class="inline-flex h-10 items-center justify-center rounded-md bg-albawani-main px-6 py-2 text-sm font-medium text-white shadow transition-all hover:bg-albawani-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:shadow-md">
+                Generate Report
+            </button>
         </div>
-        <div class="control-group">
-                <label for="end-date">To:</label>
-                <input type="date" id="end-date" name="end-date" value="{{ end_date }}">
-        </div>
-        <button class="attendance-btn" id="request-attendance-btn">Generate Report</button>
-        </div>
+    </div>
 
-        <div class="date-controls-notification-container" id="notification-message-popup">
-                <p id="notification-message">PLACEHOLDER HERE</p>
-        </div>
+    <div id="notification-message-popup" class="notification-base">
+        <p id="notification-message" class="text-sm font-medium"></p>
+    </div>
 
+</div>
 {% endblock %}

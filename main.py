@@ -55,7 +55,7 @@ def auth_callback():
 
     if "id_token_claims" in result:
         session["user"] = result["id_token_claims"]
-        return redirect(url_for("render_home_page"))
+        return redirect(url_for("render_attendees_page"))
 
     return "Authentication failed", 401
     
@@ -63,12 +63,12 @@ def auth_callback():
 @app.route("/attendance", methods=["GET"])
 @login_required
 def render_attendees_page():
-    return render_template("attendance.html")
+    return render_template("attendance.html", user=get_user_client())
 
 @app.route("/employees", methods=["GET"])
 @login_required
 def render_employees_page():
-    return render_template("employees.html")
+    return render_template("employees.html", user=get_user_client())
 
 @app.route("/request-attendance", methods=["POST"])
 @login_required
@@ -106,7 +106,7 @@ def create_form():
         logger.error(e)
         return jsonify({"error": f"Invalid JSON format: {str(e)}"}), 400
     
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
     return redirect(
@@ -115,5 +115,5 @@ def logout():
     )
 
 if __name__ == "__main__":
-    set_db_tables()
+    set_db_tables() 
     app.run(debug=True, port=8000)

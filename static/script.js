@@ -9,8 +9,8 @@ const endDateForm = document.getElementById("end-date");
 const notifMessagePopup = document.getElementById("notification-message-popup");
 const notifMessage = document.getElementById("notification-message");
 
-
 const notificationDuration = 3000;
+
 
 async function sendAttendanceRequest(attendanceEndpoint, attendanceDateRange) {
     try {
@@ -35,44 +35,35 @@ async function sendAttendanceRequest(attendanceEndpoint, attendanceDateRange) {
 };
 
 function getDateRange(){
-    const getcurrentDate = new Date()
-    console.log(`Today: ${getcurrentDate}`)
     let startDate = startDateForm.value
     let endDate = endDateForm.value
+    
     let dateSuccessMessage = `Successfully sent attendance request`;
-    let dateWarningMessage = `Warning: your given end date ${endDate} is the same as your start date ${startDate}`;
-    let dateErrorMessage = `Error: your given end date ${endDate} must be greater than your start date ${startDate}`;
-    let dateEmptyMessage = `Error: your given end date or start date is empty.`;
-    console.log(`START: ${startDate} || END: ${endDate}`)
+    let dateWarningMessage = `Warning: End date ${endDate} is same as Start date ${startDate}`;
+    let dateErrorMessage = `Error: End date ${endDate} must be after Start date ${startDate}`;
+    let dateEmptyMessage = `Error: Please select both dates.`;
 
-    notifMessagePopup.classList.remove('success', 'warning', 'error');
+    // clear notif state
+    notifMessagePopup.classList.remove('notification-visible', 'notification-success', 'notification-warning', 'notification-error');
 
-    if (endDate == startDate){
-        notifMessagePopup.classList.add("warning")
-        notifMessagePopup.classList.add("visible")
-        notifMessage.innerHTML = dateWarningMessage
-        // console.warn(`your given end date ${endDate} is the same as your start date ${startDate}`);
-    }
-    else if (endDate>getcurrentDate){
-        console.log(`Selected end date big`)
-    }
-    else if (endDate == "" || startDate =="") {
-        notifMessagePopup.classList.add("error")
-        notifMessagePopup.classList.add("visible")
-        notifMessage.innerHTML = dateEmptyMessage
+    // show inteded notif
+    const showNotification = (type, message) => {
+        notifMessagePopup.classList.add('notification-visible');
+        notifMessagePopup.classList.add(`notification-${type}`);
+        notifMessage.innerHTML = message;
     }
 
+    if (endDate === "" || startDate === "") {
+        showNotification('error', dateEmptyMessage);
+    }
+    else if (endDate === startDate){
+        showNotification('warning', dateWarningMessage);
+    }
     else if (endDate < startDate){
-        notifMessagePopup.classList.add("error")
-        notifMessagePopup.classList.add("visible")
-        notifMessage.innerHTML = dateErrorMessage
-        // console.error(`your given end date ${endDate} must be greater than your start date ${startDate}`)
+        showNotification('error', dateErrorMessage);
     }
     else {
-        notifMessagePopup.classList.add("success")
-        notifMessagePopup.classList.add("visible")
-        notifMessage.innerHTML = dateSuccessMessage
-        // console.error(`your given end date ${endDate} must be greater than your start date ${startDate}`)
+        showNotification('success', dateSuccessMessage);
     }
 
     return {
@@ -83,16 +74,19 @@ function getDateRange(){
 };
 
 function clearDateNotification(){
-    notifMessagePopup.classList.remove("visible")
+    notifMessagePopup.classList.remove("notification-visible")
     notifMessage.innerHTML = ""
 }
 
-requestAttendanceBtn.addEventListener('click', function() {
-    const filteredDateRange = getDateRange();
-    const attendanceServerResponse = sendAttendanceRequest(ATTENDANCE_API, filteredDateRange)
-    setTimeout(() => {
-        clearDateNotification()
-    }, notificationDuration);
-    console.log(attendanceServerResponse)
-});
-
+if(requestAttendanceBtn) {
+    requestAttendanceBtn.addEventListener('click', function() {
+        const filteredDateRange = getDateRange();
+        // Only send if valid (logic check optional, but keeping your original flow)
+        // If you want to prevent sending on error, add check here.
+        
+        const attendanceServerResponse = sendAttendanceRequest(ATTENDANCE_API, filteredDateRange)
+        setTimeout(() => {
+            clearDateNotification()
+        }, notificationDuration);
+    });
+}

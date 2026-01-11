@@ -1,11 +1,62 @@
 {% extends "base.html" %}
 
 {% block title %}Employees{% endblock %}
-{% block header %}Employees{% endblock %}
-{% block date %}8/25/2025{% endblock %}
+{% block header %}Employee Directory{% endblock %}
 
 {% block content %}
-<div class="employees-container">
-    <button class="employees-btn">Generate Employees List</button>
+<div class="w-full max-w-5xl mx-auto space-y-6">
+
+    <div class="rounded-xl border border-zinc-200 bg-white shadow-sm p-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="space-y-1 text-center sm:text-left">
+                <h3 class="text-lg font-medium text-zinc-900">Employee List</h3>
+                <p class="text-sm text-zinc-500">View and manage active personnel records.</p>
+            </div>
+            
+            <button id="generate-employees-btn" class="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-albawani-main px-6 py-2 text-sm font-medium text-white shadow transition-all hover:bg-albawani-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Generate List
+            </button>
+        </div>
+    </div>
+
+    <div id="notification-message-popup" class="notification-base">
+        <p id="notification-message" class="text-sm font-medium"></p>
+    </div>
+
+    <div class="rounded-xl border border-zinc-200 bg-white shadow-sm overflow-hidden hidden" id="employees-result-container">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="bg-zinc-50 text-zinc-500 border-b border-zinc-200 uppercase tracking-wider text-xs">
+                    <tr>
+                        <th class="px-6 py-4 font-medium">ID</th>
+                        <th class="px-6 py-4 font-medium">Name</th>
+                        <th class="px-6 py-4 font-medium">Department</th>
+                        <th class="px-6 py-4 font-medium">Role</th>
+                        <th class="px-6 py-4 font-medium text-right">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="employees-table-body" class="divide-y divide-zinc-100 bg-white">
+                    <tr class="hover:bg-zinc-50/50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-zinc-900">#EMP-001</td>
+                        <td class="px-6 py-4">Loading...</td>
+                        <td class="px-6 py-4 text-zinc-500">-</td>
+                        <td class="px-6 py-4 text-zinc-500">-</td>
+                        <td class="px-6 py-4 text-right">
+                            <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="border-t border-zinc-200 bg-zinc-50 px-6 py-3 text-xs text-zinc-500 flex justify-between items-center">
+            <span>Showing results</span>
+            <div class="space-x-2">
+                <button class="hover:text-zinc-900 disabled:opacity-50" disabled>&larr; Prev</button>
+                <button class="hover:text-zinc-900 disabled:opacity-50" disabled>Next &rarr;</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

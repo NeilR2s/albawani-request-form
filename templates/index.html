@@ -1,9 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Welcome - Albawani Portal{% endblock %}
 {% block header %}Home{% endblock %}
-{% block date %}8/25/2025{% endblock %}
 
 {% block content %}
-    <h1>Home Page - No Auth Required</h1>
+<div class="relative flex min-h-[90vh] flex-col items-center justify-center p-4">
+
+    <div class="absolute inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-40 mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)"></div>
+
+    <div class="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-white/20 bg-white shadow-2xl lg:grid lg:grid-cols-2">
+        
+        <div class="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+            <div class="mb-28">
+                <div class="flex items-center gap-3 mb-6">
+                    <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Albawani Logo" class="h-12 w-12 object-contain">
+                    <span class="text-xl font-medium tracking-tight text-zinc-900">Albawani</span>
+                </div>
+                
+                <h2 class="mb-3 text-3xl font-medium tracking-tight text-zinc-900 sm:text-4xl">
+                    Attendance Portal
+                </h2>
+                <p class="text-zinc-500 md:text-lg">
+                    Securely access and request your attendance reports.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <a href="/attendance"
+                    class="inline-flex h-12 w-full items-center justify-center rounded-lg bg-albawani-main px-8 text-base font-medium text-white shadow-md transition-all hover:bg-albawani-secondary hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-albawani-ring focus-visible:ring-offset-2">
+                    Log in to Portal
+                </a>
+                <p class="text-center text-xs text-zinc-400">
+                    Authorized personnel only. Contact IT for access issues.
+                </p>
+            </div>
+        </div>
+
+        <div class="relative hidden h-full w-full sm:block bg-zinc-100">
+            <img 
+                src="{{ url_for('static', filename='assets/albawani-hq.jpg') }}" 
+                alt="Albawani HQ" 
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+            >
+            <div class="absolute inset-0 bg-albawani-main/10 mix-blend-multiply"></div>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center text-xs text-zinc-400">
+        &copy; 2026 Albawani. All rights reserved.
+    </div>
+</div>
 {% endblock %}
